@@ -25,6 +25,8 @@ namespace GreatPizzaTests.Tests.Unit.DomainModels
         public void TestAddTopping()
         {
             var sut = new Pizza();
+            var toppings = new List<Topping> { };
+            sut.Toppings = toppings;
             Assert.AreEqual(0, sut.Toppings.Count);
 
             var topping = new Topping();
