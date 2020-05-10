@@ -6,7 +6,7 @@ namespace GreatPizza.Contracts
     /// <summary>
     /// Handles functionality related with Topping items. Works with Topping model.
     /// </summary>
-    interface IToppingService
+    public interface IToppingService
     {
         /// <summary>
         /// Retrieves all Topping stored items.
@@ -18,6 +18,7 @@ namespace GreatPizza.Contracts
         /// Adds topping item.
         /// </summary>
         /// <param name="topping"></param>
+        /// <returns>The stored item.</returns>
         void Add(Topping topping);
 
         /// <summary>

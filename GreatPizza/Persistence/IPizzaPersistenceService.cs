@@ -6,7 +6,7 @@ namespace GreatPizza.Persistence
     /// <summary>
     /// Responsible of Pizza entity persistence methods. Handles PizzaEntity objects.
     /// </summary>
-    interface IPizzaPersistenceService
+    public interface IPizzaPersistenceService
     {
         /// <summary>
         /// Retrieves all Pizza stored entities.
@@ -15,7 +15,7 @@ namespace GreatPizza.Persistence
         List<PizzaEntity> GetAll();
 
         /// <summary>
-        /// Retrieves all Pizza stored entities.
+        /// Retrieves one Pizza stored entity using its name as reference.
         /// </summary>
         /// <returns>One Pizza entity.</returns>
         PizzaEntity GetByName(string name);

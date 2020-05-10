@@ -5,11 +5,6 @@ namespace GreatPizza.DomainModels
     public class Pizza
     {
         public string Name { get; set; }
-        public List<Topping> Toppings { get; set; }
-
-        public void AddTopping(Topping topping)
-        {
-            Toppings.Add(topping);
-        }
+        public List<Topping> Toppings { get; set; } = new List<Topping>();
     }
 }

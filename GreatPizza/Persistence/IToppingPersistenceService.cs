@@ -6,7 +6,7 @@ namespace GreatPizza.Persistence
     /// <summary>
     /// Responsible of Topping entity persistence methods. Handles ToppingEntity objects.
     /// </summary>
-    interface IToppingPersistenceService
+    public interface IToppingPersistenceService
     {
         /// <summary>
         /// Retrieves all Topping stored entities.
@@ -15,7 +15,7 @@ namespace GreatPizza.Persistence
         List<ToppingEntity> GetAll();
 
         /// <summary>
-        /// Retrieves all Topping stored entities.
+        /// Retrieves one Topping stored entity using its name as reference.
         /// </summary>
         /// <returns>One Topping entity.</returns>
         ToppingEntity GetByName(string name);
@@ -25,12 +25,6 @@ namespace GreatPizza.Persistence
         /// </summary>
         /// <param name="topping"></param>
         void Add(ToppingEntity topping);
-
-        /// <summary>
-        /// Update topping entity.
-        /// </summary>
-        /// <param name="topping"></param>
-        void Update(ToppingEntity topping);
 
         /// <summary>
         /// Deletes topping entity.

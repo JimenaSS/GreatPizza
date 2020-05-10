@@ -6,7 +6,7 @@ namespace GreatPizza.Contracts
     /// <summary>
     /// Handles functionality related with Pizza items. Works with Pizza model.
     /// </summary>
-    interface IPizzaService
+    public interface IPizzaService
     {
         /// <summary>
         /// Retrieves all Pizza stored items.
