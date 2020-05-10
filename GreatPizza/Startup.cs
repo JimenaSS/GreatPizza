@@ -32,6 +32,7 @@ namespace GreatPizza
             services.AddScoped<IPizzaPersistenceService, PizzaRepository>();
             services.AddScoped<IToppingService, ToppingService>();
             services.AddScoped<IPizzaService, PizzaService>();
+            services.AddScoped<IPizzaToppingService, PizzaService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

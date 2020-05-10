@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreatPizza", "GreatPizza\GreatPizza.csproj", "{F2589AF0-1CA2-4DE7-A1D0-A4DE0E02D06B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreatPizzaTests", "GreatPizzaTests\GreatPizzaTests.csproj", "{A73CB021-3812-44F0-8790-84AC7537A178}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreatPizzaTests", "GreatPizzaTests\GreatPizzaTests.csproj", "{A73CB021-3812-44F0-8790-84AC7537A178}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

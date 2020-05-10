@@ -10,10 +10,12 @@ namespace GreatPizza.Services
     public class PizzaService : IPizzaService, IPizzaToppingService
     {
         IPizzaPersistenceService pizzaRepository;
+        IToppingService toppingService;
 
-        public PizzaService(IPizzaPersistenceService pizzaRepository)
+        public PizzaService(IPizzaPersistenceService pizzaRepository, IToppingService toppingService)
         {
             this.pizzaRepository = pizzaRepository;
+            this.toppingService = toppingService;
         }
 
         /// <summary>
@@ -24,8 +26,9 @@ namespace GreatPizza.Services
         /// <returns>Pizza item converted from returned pizza entity.</returns>
         public void Add(Pizza pizza)
         {
-            var toppingEntities = pizza.Toppings != null
-                ? pizza.Toppings.Select(toppingModel => new ToppingEntity() { Name = toppingModel.Name }).ToList()
+            var toppingEntities = pizza.Toppings != null ?
+                pizza.Toppings.Where(toppingModel => toppingService.GetByName(toppingModel.Name) != null)
+                .Select(toppingModel => new ToppingEntity() { Name = toppingModel.Name }).ToList()
                 : new List<ToppingEntity>();
             pizzaRepository.Add(new PizzaEntity() { Name = pizza.Name, Toppings = toppingEntities });
         }
@@ -76,10 +79,15 @@ namespace GreatPizza.Services
         /// <param name="pizza"></param>
         /// <param name="topping"></param>
         /// <returns>Updated Pizza with stored Topping items.</returns>
-        public Pizza AddTopping(Pizza pizza, Topping topping)
+        public Pizza AddToppings(Pizza pizza, List<Topping> toppings)
         {
-            if (!string.IsNullOrEmpty(topping.Name))
-                pizza.Toppings.Add(topping);
+            pizza = GetByName(pizza.Name);
+
+            foreach (var topping in toppings)
+            {
+                if (!string.IsNullOrEmpty(topping.Name) && toppingService.GetByName(topping.Name) != null)
+                    pizza.Toppings.Add(topping);
+            }
 
             var toppingEntities = pizza.Toppings.Select(toppingModel => new ToppingEntity() { Name = toppingModel.Name }).ToList();
             pizzaRepository.Update(new PizzaEntity() { Name = pizza.Name, Toppings = toppingEntities });
@@ -95,15 +103,33 @@ namespace GreatPizza.Services
         /// <param name="pizza"></param>
         /// <param name="topping"></param>
         /// <returns>Updated Pizza with stored Topping items.</returns>
-        public Pizza DeleteTopping(Pizza pizza, Topping topping)
+        public Pizza DeleteToppings(Pizza pizza, List<Topping> toppings)
         {
-            if (!string.IsNullOrEmpty(topping.Name) && pizza.Toppings.Contains(topping))
-                pizza.Toppings.Remove(topping);
+            pizza = GetByName(pizza.Name);
+            var remainingToppings = pizza.Toppings;
+
+            foreach (var topping in toppings)
+            {
+                if (!string.IsNullOrEmpty(topping.Name))
+                    remainingToppings = remainingToppings.Where(storedTopping => storedTopping.Name != topping.Name).ToList();
+            }
+
+            pizza.Toppings = remainingToppings;
 
             var toppingEntities = pizza.Toppings.Select(toppingModel => new ToppingEntity() { Name = toppingModel.Name }).ToList();
             pizzaRepository.Update(new PizzaEntity() { Name = pizza.Name, Toppings = toppingEntities });
 
             return pizza;
+        }
+
+        /// <summary>
+        /// Adds one Topping item to list in Pizza.
+        /// </summary>
+        /// <param name="Pizza"></param>
+        /// <returns>List of stored Topping items from pizza.</returns>
+        public List<Topping> GetPizzaToppings(Pizza pizza)
+        {
+            return GetByName(pizza.Name).Toppings;
         }
     }
 }

@@ -43,12 +43,26 @@ namespace GreatPizza.Services
         /// <summary>
         /// Retrieves all Topping stored items.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of stored toppings</returns>
         public List<Topping> GetAll()
         {
             return toppingPersistenceService.GetAll()
                 .Select(x => new Topping() { Name = x.Name })
                 .ToList();
+        }
+
+        /// <summary>
+        /// Retrieves one Topping stored item using its name as reference.
+        /// </summary>
+        /// <returns>Stored topping item</returns>
+        public Topping GetByName(string name)
+        {
+            ToppingEntity toppingEntity = toppingPersistenceService.GetByName(name);
+
+            if (toppingEntity == null)
+                return null;
+
+            return new Topping() { Name = toppingEntity.Name };
         }
     }
 }

@@ -48,5 +48,17 @@ namespace GreatPizzaTests.Tests.Unit.Services
 
             Assert.AreEqual(toppingEntityList.Count, result.Count);
         }
+
+        [TestMethod]
+        public void TestGetByName()
+        {
+            var testToppingEntity = new ToppingEntity() { Name = "TestName" };
+            toppingRepositoryMock.Setup(m => m.GetByName("TestName"))
+                .Returns(testToppingEntity);
+
+            var result = sut.GetByName("TestName");
+
+            Assert.AreEqual(testToppingEntity.Name, result.Name);
+        }
     }
 }

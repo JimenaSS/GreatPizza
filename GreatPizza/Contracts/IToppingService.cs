@@ -15,6 +15,12 @@ namespace GreatPizza.Contracts
         List<Topping> GetAll();
 
         /// <summary>
+        /// Retrieves one Topping stored item using its name as reference.
+        /// </summary>
+        /// <returns>Stored topping item</returns>
+        Topping GetByName(string name);
+
+        /// <summary>
         /// Adds topping item.
         /// </summary>
         /// <param name="topping"></param>
