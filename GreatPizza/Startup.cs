@@ -18,6 +18,8 @@ namespace GreatPizza
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +30,10 @@ namespace GreatPizza
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+            }));
             services.AddScoped<IToppingPersistenceService, ToppingRepository>();
             services.AddScoped<IPizzaPersistenceService, PizzaRepository>();
             services.AddScoped<IToppingService, ToppingService>();
@@ -47,6 +53,14 @@ namespace GreatPizza
             {
                 app.UseHsts();
             }
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
+            app.UseCors("ApiCorsPolicy");
 
             app.UseHttpsRedirection();
             app.UseMvc();
